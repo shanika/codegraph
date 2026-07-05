@@ -1,0 +1,18 @@
+{
+  "name": "System Context",
+  "level": 1,
+  "meta": { "direction": "TB" },
+  "nodes": [
+    { "id": "developer", "label": "Developer", "meta": { "type": "person" } },
+    { "id": "ai-agent", "label": "AI Coding Agent", "meta": { "type": "person" } },
+    { "id": "codegraph", "label": "CodeGraph", "subDiagramId": "containers", "meta": { "type": "system", "technology": "typescript" } },
+    { "id": "codebase", "label": "Your Codebase", "meta": { "type": "external" } },
+    { "id": "telemetry", "label": "Anonymous Telemetry", "meta": { "type": "external", "technology": "posthog" } }
+  ],
+  "edges": [
+    { "id": "e-dev-codegraph", "source": "developer", "target": "codegraph", "label": "installs & runs CLI", "meta": { "type": "calls" } },
+    { "id": "e-agent-codegraph", "source": "ai-agent", "target": "codegraph", "label": "queries graph over MCP", "meta": { "type": "calls" } },
+    { "id": "e-codegraph-codebase", "source": "codegraph", "target": "codebase", "label": "parses & indexes", "meta": { "type": "reads" } },
+    { "id": "e-codegraph-telemetry", "source": "codegraph", "target": "telemetry", "label": "sends usage events (opt-out)", "meta": { "type": "publishes" } }
+  ]
+}

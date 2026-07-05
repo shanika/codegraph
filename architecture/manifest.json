@@ -1,0 +1,8 @@
+{
+  "name": "CodeGraph",
+  "description": "CodeGraph is a local-first code intelligence library, CLI, and MCP server. It parses any supported codebase with tree-sitter, stores symbols, edges, and files in an embedded SQLite database (WAL + FTS5), and exposes the resulting knowledge graph to AI coding agents over the Model Context Protocol. Extraction is deterministic — derived from the AST, never LLM-summarized — so the graph is a fast, cached substitute for the grep-and-read loop an agent would otherwise run.\n\nThe product ships as a single npm package (@colbymchenry/codegraph) that serves three roles from one binary: a multi-agent installer, an indexer, and a long-lived MCP server. Per-project data lives entirely on the developer's machine in a .codegraph/ directory; there is no backend service in the request path. The only outbound network traffic is anonymous, opt-out usage telemetry.\n\nTwo actors drive the system: developers, who install it and run CLI commands, and AI coding agents (Claude Code, Cursor, Codex CLI, opencode), which query the graph over MCP to answer structural and flow questions in a few fast calls instead of dozens of file reads.\n\nThe repository also contains two supporting deployables: an Astro/Starlight documentation site and a Cloudflare Worker that ingests anonymous telemetry and forwards it to PostHog.",
+  "source": "https://github.com/shanika/codegraph",
+  "sourceHost": "github",
+  "topDiagram": "system-context",
+  "diagrams": ["system-context", "containers", "components-core"]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Containers",
+  "level": 2,
+  "meta": { "direction": "TB" },
+  "nodes": [
+    { "id": "developer-c", "label": "Developer", "meta": { "type": "person" } },
+    { "id": "ai-agent-c", "label": "AI Coding Agent", "meta": { "type": "person" } },
+    { "id": "cli", "label": "CLI (codegraph)", "path": "src/bin/codegraph.ts", "meta": { "type": "gateway", "technology": "nodedotjs" } },
+    { "id": "mcp-server", "label": "MCP Server", "path": "src/mcp/", "meta": { "type": "gateway", "technology": "nodedotjs" } },
+    { "id": "core-engine", "label": "Core Engine", "path": "src/index.ts", "subDiagramId": "components-core", "meta": { "type": "service", "technology": "typescript" } },
+    { "id": "sqlite-index", "label": "SQLite Index (.codegraph/)", "meta": { "type": "database", "technology": "sqlite" } },
+    { "id": "source-files", "label": "Your Codebase", "meta": { "type": "external" } },
+    { "id": "telemetry-worker", "label": "Telemetry Worker", "path": "telemetry-worker/", "meta": { "type": "external", "technology": "cloudflareworkers" } },
+    { "id": "posthog", "label": "PostHog", "meta": { "type": "external", "technology": "posthog" } }
+  ],
+  "edges": [
+    { "id": "e-dev-cli", "source": "developer-c", "target": "cli", "label": "install / index / query", "meta": { "type": "calls" } },
+    { "id": "e-agent-mcp", "source": "ai-agent-c", "target": "mcp-server", "label": "codegraph_explore (MCP/stdio)", "meta": { "type": "calls" } },
+    { "id": "e-cli-engine", "source": "cli", "target": "core-engine", "label": "drives", "meta": { "type": "calls" } },
+    { "id": "e-mcp-engine", "source": "mcp-server", "target": "core-engine", "label": "drives", "meta": { "type": "calls" } },
+    { "id": "e-engine-files", "source": "core-engine", "target": "source-files", "label": "parses (tree-sitter)", "meta": { "type": "reads" } },
+    { "id": "e-engine-db", "source": "core-engine", "target": "sqlite-index", "label": "reads/writes graph", "meta": { "type": "writes" } },
+    { "id": "e-cli-telemetry", "source": "cli", "target": "telemetry-worker", "label": "anonymous events (opt-out)", "meta": { "type": "publishes" } },
+    { "id": "e-mcp-telemetry", "source": "mcp-server", "target": "telemetry-worker", "label": "anonymous events (opt-out)", "meta": { "type": "publishes" } },
+    { "id": "e-telemetry-posthog", "source": "telemetry-worker", "target": "posthog", "label": "forwards /batch", "meta": { "type": "publishes" } }
+  ]
+}

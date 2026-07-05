@@ -1,0 +1,9 @@
+{
+  "skill": "architecture-docs",
+  "version": "0.2.1",
+  "agent": "claude-code",
+  "scope": "project",
+  "checksum": "sha256:a71be5e622ea5686364119bee663871cf01db85ec5c66b362947175e7a1a1c14",
+  "installedAt": "2026-07-05T09:20:06.551Z",
+  "installer": "@tecture/skill"
+}

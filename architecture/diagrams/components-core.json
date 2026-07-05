@@ -1,0 +1,22 @@
+{
+  "name": "Core Engine Components",
+  "level": 3,
+  "meta": { "direction": "LR" },
+  "nodes": [
+    { "id": "extraction", "label": "Extraction", "path": "src/extraction/", "meta": { "type": "service", "technology": "treesitter" } },
+    { "id": "resolution", "label": "Reference Resolution", "path": "src/resolution/", "meta": { "type": "service" } },
+    { "id": "db-layer", "label": "DB Layer (node:sqlite)", "path": "src/db/", "meta": { "type": "database", "technology": "sqlite" } },
+    { "id": "graph-query", "label": "Graph Traversal & Query", "path": "src/graph/", "meta": { "type": "service" } },
+    { "id": "search", "label": "FTS5 Search", "path": "src/search/", "meta": { "type": "service", "technology": "sqlite" } },
+    { "id": "context-builder", "label": "Context Builder", "path": "src/context/", "meta": { "type": "service" } }
+  ],
+  "edges": [
+    { "id": "e-extraction-db", "source": "extraction", "target": "db-layer", "label": "writes nodes/edges/files", "meta": { "type": "writes" } },
+    { "id": "e-extraction-resolution", "source": "extraction", "target": "resolution", "label": "hands off parsed symbols", "meta": { "type": "calls" } },
+    { "id": "e-resolution-db", "source": "resolution", "target": "db-layer", "label": "reads nodes, writes edges", "meta": { "type": "writes" } },
+    { "id": "e-graph-db", "source": "graph-query", "target": "db-layer", "label": "traverses edges", "meta": { "type": "reads" } },
+    { "id": "e-search-db", "source": "search", "target": "db-layer", "label": "FTS5 MATCH", "meta": { "type": "reads" } },
+    { "id": "e-context-graph", "source": "context-builder", "target": "graph-query", "label": "callers/callees/impact", "meta": { "type": "calls" } },
+    { "id": "e-context-search", "source": "context-builder", "target": "search", "label": "symbol lookup", "meta": { "type": "calls" } }
+  ]
+}
